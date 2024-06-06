@@ -1366,6 +1366,7 @@ class FlDotCirclePainter extends FlDotPainter {
     this.strokeColor = const Color.fromRGBO(76, 175, 80, 1),
     this.strokeWidth = 0.0,
     this.text = '0.0',
+    this.style = const TextStyle(color: Colors.black, fontSize: 12),
   }) : radius = radius ?? 4.0;
 
   /// The fill color to use for the circle
@@ -1382,6 +1383,9 @@ class FlDotCirclePainter extends FlDotPainter {
 
   /// The Value
   String text;
+
+  /// The TextStyle
+  TextStyle style;
 
   /// Implementation of the parent class to draw the circle
   @override
@@ -1405,7 +1409,7 @@ class FlDotCirclePainter extends FlDotPainter {
     );
 
     final span = TextSpan(
-      style: const TextStyle(color: Colors.black, fontSize: 12),
+      style: style,
       text: text,
     );
     final textPainter = TextPainter(
@@ -1445,6 +1449,7 @@ class FlDotCirclePainter extends FlDotPainter {
       strokeColor: Color.lerp(a.strokeColor, b.strokeColor, t)!,
       strokeWidth: lerpDouble(a.strokeWidth, b.strokeWidth, t)!,
       text: '',
+      style: style,
     );
   }
 
