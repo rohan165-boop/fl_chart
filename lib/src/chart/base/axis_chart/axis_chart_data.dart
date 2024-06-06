@@ -1365,6 +1365,7 @@ class FlDotCirclePainter extends FlDotPainter {
     double? radius,
     this.strokeColor = const Color.fromRGBO(76, 175, 80, 1),
     this.strokeWidth = 0.0,
+    this.text = '0.0',
   }) : radius = radius ?? 4.0;
 
   /// The fill color to use for the circle
@@ -1378,6 +1379,9 @@ class FlDotCirclePainter extends FlDotPainter {
 
   /// The stroke width to use for the circle
   double strokeWidth;
+
+  /// The Value
+  String text;
 
   /// Implementation of the parent class to draw the circle
   @override
@@ -1399,6 +1403,26 @@ class FlDotCirclePainter extends FlDotPainter {
         ..color = color
         ..style = PaintingStyle.fill,
     );
+
+    final span = TextSpan(
+      style: const TextStyle(color: Colors.black, fontSize: 12),
+      text: text,
+    );
+    final textPainter = TextPainter(
+      text: span,
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr,
+    );
+    // ignore: cascade_invocations
+    textPainter.layout();
+
+    // Adjust the offset to position the text just above the dot
+    final textOffset = offsetInCanvas.translate(
+      -textPainter.width / 2,
+      -radius - textPainter.height - 4,
+    );
+
+    textPainter.paint(canvas, textOffset);
   }
 
   /// Implementation of the parent class to get the size of the circle
@@ -1420,6 +1444,7 @@ class FlDotCirclePainter extends FlDotPainter {
       radius: lerpDouble(a.radius, b.radius, t),
       strokeColor: Color.lerp(a.strokeColor, b.strokeColor, t)!,
       strokeWidth: lerpDouble(a.strokeWidth, b.strokeWidth, t)!,
+      text: '',
     );
   }
 
